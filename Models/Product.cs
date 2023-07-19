@@ -10,6 +10,8 @@ namespace inventory_system.Models
   {
     public int Id { get; set; }
     public string? Name { get; set; }
+
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public Categories Category { get; set; }
     public string? Supplier { get; set; }
     public int Quantity { get; set; }
