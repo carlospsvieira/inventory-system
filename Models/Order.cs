@@ -5,15 +5,13 @@ using System.Threading.Tasks;
 
 namespace inventory_system.Models
 {
-  public class Order : Product
-  {
-    private bool completed = false;
-
-    public bool GetCompleted()
+    public class Order : Product
     {
-      return completed;
-    }
+        public bool Completed { get; set; } = false;
 
-    public void SetCompleted(bool value) => completed = value;
-  }
+        public void CompleteOrder()
+        {
+            Completed = true;
+        }
+    }
 }
