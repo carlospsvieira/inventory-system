@@ -10,43 +10,41 @@ namespace inventory_system.Controllers
   [Route("api/[controller]")]
   public class OrderController : ControllerBase
   {
-    private static List<Order> orders = new List<Order> {
-      new Order {Id = 1, Name = "Cookie", Category = Categories.PantryStaples, Supplier = "Nestle", Quantity = 10000},
-      new Order {Name = "Ham", Category = Categories.DairyAndEgg, Supplier = "Nestle", Weight = 0.5, Quantity = 100}
-    };
+    private readonly IOrderService _orderService;
+    public OrderController(IOrderService orderService)
+    {
+      _orderService = orderService;
+
+    }
 
     [HttpGet]
     public ActionResult<List<Order>> Get()
     {
+      var orders = _orderService.GetAllOrders();
       return Ok(orders);
     }
 
     [HttpGet("{id}")]
     public ActionResult<Order> GetOrderById(int id)
     {
-
-      var order = orders.Find(o => o.Id == id);
+      var order = _orderService.GetOrderById(id);
 
       if (order == null)
       {
         return NotFound();
       }
-      return Ok(order);
 
+      return Ok(order);
     }
 
     [HttpPost]
     public ActionResult<List<Order>> CreateNewOrder(Order newOrder)
     {
-      try
-      {
-        orders.Add(newOrder);
-        return Created("order", orders);
-      }
-      catch (Exception ex)
-      {
-        return BadRequest($"Error occurred while creating a new order. {ex}");
-      }
+      _orderService.CreateNewOrder(newOrder);
+
+      var orders = _orderService.GetAllOrders();
+      
+      return Created("order", orders);
     }
   }
 }
