@@ -34,5 +34,19 @@ namespace inventory_system.Controllers
       return Ok(order);
 
     }
+
+    [HttpPost]
+    public ActionResult<List<Order>> CreateNewOrder(Order newOrder)
+    {
+      try
+      {
+        orders.Add(newOrder);
+        return Created("order", orders);
+      }
+      catch (Exception ex)
+      {
+        return BadRequest($"Error occurred while creating a new order. {ex}");
+      }
+    }
   }
 }
