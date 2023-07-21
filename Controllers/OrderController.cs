@@ -10,12 +10,15 @@ namespace inventory_system.Controllers
   [Route("api/[controller]")]
   public class OrderController : ControllerBase
   {
-    private static Order order = new Order() { Id = 1, Name = "Cookie", Category = Categories.Pet, EntryDate = DateTime.Now };
+    private static List<Order> orders = new List<Order> {
+      new Order {Name = "Cookie", Category = Categories.PantryStaples, Supplier = "Nestle", Quantity = 10000},
+      new Order {Name = "Ham pack 100g", Category = Categories.DairyAndEgg, Supplier = "Nestle", Quantity = 100}
+    };
 
     [HttpGet]
-    public ActionResult Get()
+    public ActionResult<List<Order>> Get()
     {
-      return Ok(order);
+      return Ok(orders);
     }
   }
 }
