@@ -1,5 +1,9 @@
+using System.Text.Json.Serialization;
+
 namespace inventory_system.Models
 {
+
+  [JsonConverter(typeof(JsonStringEnumConverter))]
   public enum Categories
   {
     FreshProduce = 1,
