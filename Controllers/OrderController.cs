@@ -11,14 +11,28 @@ namespace inventory_system.Controllers
   public class OrderController : ControllerBase
   {
     private static List<Order> orders = new List<Order> {
-      new Order {Name = "Cookie", Category = Categories.PantryStaples, Supplier = "Nestle", Quantity = 10000},
-      new Order {Name = "Ham pack 100g", Category = Categories.DairyAndEgg, Supplier = "Nestle", Quantity = 100}
+      new Order {Id = 1, Name = "Cookie", Category = Categories.PantryStaples, Supplier = "Nestle", Quantity = 10000},
+      new Order {Name = "Ham", Category = Categories.DairyAndEgg, Supplier = "Nestle", Weight = 0.5, Quantity = 100}
     };
 
     [HttpGet]
     public ActionResult<List<Order>> Get()
     {
       return Ok(orders);
+    }
+
+    [HttpGet("{id}")]
+    public ActionResult<Order> GetOrderById(int id)
+    {
+
+      var order = orders.Find(o => o.Id == id);
+
+      if (order == null)
+      {
+        return NotFound();
+      }
+      return Ok(order);
+
     }
   }
 }
