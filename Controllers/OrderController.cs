@@ -18,18 +18,18 @@ namespace inventory_system.Controllers
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<Order>>> Get()
+    public async Task<ActionResult<ServiceResponse<List<Order>>>> Get()
     {
       var orders = await _orderService.GetAllOrders();
       return Ok(orders);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Order>> GetOrderById(int id)
+    public async Task<ActionResult<ServiceResponse<Order>>> GetOrderById(int id)
     {
       var order = await _orderService.GetOrderById(id);
 
-      if (order == null)
+      if (order.Data == null)
       {
         return NotFound();
       }
@@ -38,7 +38,7 @@ namespace inventory_system.Controllers
     }
 
     [HttpPost]
-    public async Task<ActionResult<List<Order>>> CreateNewOrder(Order newOrder)
+    public async Task<ActionResult<ServiceResponse<List<Order>>>> CreateNewOrder(Order newOrder)
     {
       await _orderService.CreateNewOrder(newOrder);
 

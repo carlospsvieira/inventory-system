@@ -9,25 +9,31 @@ namespace inventory_system.Services
   {
     private static List<Order> orders = new List<Order> {
       new Order {Id = 1, Name = "Cookie", Category = Categories.PantryStaples, Supplier = "Nestle", Quantity = 10000},
-      new Order {Name = "Ham", Category = Categories.DairyAndEgg, Supplier = "Nestle", Weight = 0.5, Quantity = 100}
+      new Order {Id = 2, Name = "Ham", Category = Categories.DairyAndEgg, Supplier = "Nestle", Weight = 0.5, Quantity = 100}
     };
 
-    public async Task<List<Order>> CreateNewOrder(Order newOrder)
+    public async Task<ServiceResponse<List<Order>>> CreateNewOrder(Order newOrder)
     {
+      var serviceResponse = new ServiceResponse<List<Order>>();
       newOrder.EntryDate = DateTime.Now;
       orders.Add(newOrder);
-      return orders;
+      serviceResponse.Data = orders;
+      return serviceResponse;
     }
 
-    public async Task<List<Order>> GetAllOrders()
+    public async Task<ServiceResponse<List<Order>>> GetAllOrders()
     {
-      return orders;
+      var serviceResponse = new ServiceResponse<List<Order>>();
+      serviceResponse.Data = orders;
+      return serviceResponse;
     }
 
-    public async Task<Order> GetOrderById(int id)
+    public async Task<ServiceResponse<Order>> GetOrderById(int id)
     {
-      var order = orders.Find(o => o.Id == id);
-      return order;
+      var serviceResponse = new ServiceResponse<Order>();
+      var order = orders.FirstOrDefault(o => o.Id == id);
+      serviceResponse.Data = order;
+      return serviceResponse;
     }
   }
 }
