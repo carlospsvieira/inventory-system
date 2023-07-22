@@ -12,18 +12,19 @@ namespace inventory_system.Services
       new Order {Name = "Ham", Category = Categories.DairyAndEgg, Supplier = "Nestle", Weight = 0.5, Quantity = 100}
     };
 
-    public List<Order> CreateNewOrder(Order newOrder)
+    public async Task<List<Order>> CreateNewOrder(Order newOrder)
     {
+      newOrder.EntryDate = DateTime.Now;
       orders.Add(newOrder);
       return orders;
     }
 
-    public List<Order> GetAllOrders()
+    public async Task<List<Order>> GetAllOrders()
     {
       return orders;
     }
 
-    public Order GetOrderById(int id)
+    public async Task<Order> GetOrderById(int id)
     {
       var order = orders.Find(o => o.Id == id);
       return order;

@@ -7,8 +7,8 @@ namespace inventory_system.Services
 {
     public interface IOrderService
     {
-        List<Order> GetAllOrders();
-        Order GetOrderById(int id);
-        List<Order> CreateNewOrder(Order newOrder);
+        Task<List<Order>> GetAllOrders();
+        Task<Order> GetOrderById(int id);
+        Task<List<Order>> CreateNewOrder(Order newOrder);
     }
 }

@@ -18,16 +18,16 @@ namespace inventory_system.Controllers
     }
 
     [HttpGet]
-    public ActionResult<List<Order>> Get()
+    public async Task<ActionResult<List<Order>>> Get()
     {
-      var orders = _orderService.GetAllOrders();
+      var orders = await _orderService.GetAllOrders();
       return Ok(orders);
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Order> GetOrderById(int id)
+    public async Task<ActionResult<Order>> GetOrderById(int id)
     {
-      var order = _orderService.GetOrderById(id);
+      var order = await _orderService.GetOrderById(id);
 
       if (order == null)
       {
@@ -38,12 +38,12 @@ namespace inventory_system.Controllers
     }
 
     [HttpPost]
-    public ActionResult<List<Order>> CreateNewOrder(Order newOrder)
+    public async Task<ActionResult<List<Order>>> CreateNewOrder(Order newOrder)
     {
-      _orderService.CreateNewOrder(newOrder);
+      await _orderService.CreateNewOrder(newOrder);
 
-      var orders = _orderService.GetAllOrders();
-      
+      var orders = await _orderService.GetAllOrders();
+
       return Created("order", orders);
     }
   }
