@@ -21,6 +21,11 @@ namespace inventory_system.Controllers
     public async Task<ActionResult<ServiceResponse<List<Order>>>> Get()
     {
       var orders = await _orderService.GetAllOrders();
+
+      if (orders.Success == false)
+      {
+        return BadRequest(orders);
+      }
       return Ok(orders);
     }
 
@@ -29,9 +34,9 @@ namespace inventory_system.Controllers
     {
       var order = await _orderService.GetOrderById(id);
 
-      if (order.Data == null)
+      if (order.Success == false)
       {
-        return NotFound();
+        return NotFound(order);
       }
 
       return Ok(order);
@@ -42,13 +47,23 @@ namespace inventory_system.Controllers
     {
       var orders = await _orderService.CreateNewOrder(newOrder);
 
+      if (orders.Success == false)
+      {
+        return BadRequest(orders);
+      }
+
       return Created("order", orders);
     }
-    
+
     [HttpPut]
     public async Task<ActionResult<ServiceResponse<List<Order>>>> UpdateOrder(Order updatedOrder)
     {
       var orders = await _orderService.UpdateOrder(updatedOrder);
+
+      if (orders.Success == false)
+      {
+        return NotFound(orders);
+      }
 
       return Created("order", orders);
     }

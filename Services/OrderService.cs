@@ -15,25 +15,60 @@ namespace inventory_system.Services
     public async Task<ServiceResponse<List<Order>>> CreateNewOrder(Order newOrder)
     {
       var serviceResponse = new ServiceResponse<List<Order>>();
-      newOrder.EntryDate = DateTime.Now;
-      newOrder.Id = orders.Max(o => o.Id) + 1;
-      orders.Add(newOrder);
-      serviceResponse.Data = orders;
+
+      try
+      {
+        newOrder.EntryDate = DateTime.Now;
+        newOrder.Id = orders.Max(o => o.Id) + 1;
+        orders.Add(newOrder);
+        serviceResponse.Data = orders;
+        serviceResponse.Message = "OK";
+      }
+      catch (Exception ex)
+      {
+        serviceResponse.Success = false;
+        serviceResponse.Message = ex.Message;
+      }
       return serviceResponse;
     }
 
     public async Task<ServiceResponse<List<Order>>> GetAllOrders()
     {
       var serviceResponse = new ServiceResponse<List<Order>>();
-      serviceResponse.Data = orders;
+
+      try
+      {
+        serviceResponse.Data = orders;
+        serviceResponse.Message = "OK";
+
+      }
+      catch (Exception ex)
+      {
+        serviceResponse.Success = false;
+        serviceResponse.Message = ex.Message;
+      }
       return serviceResponse;
     }
 
     public async Task<ServiceResponse<Order>> GetOrderById(int id)
     {
       var serviceResponse = new ServiceResponse<Order>();
-      var order = orders.FirstOrDefault(o => o.Id == id);
-      serviceResponse.Data = order;
+
+      try
+      {
+        var order = orders.FirstOrDefault(o => o.Id == id);
+
+        if (order == null)
+          throw new Exception($"Order with Id '{id}' was not found.");
+
+        serviceResponse.Data = order;
+        serviceResponse.Message = "OK";
+      }
+      catch (Exception ex)
+      {
+        serviceResponse.Success = false;
+        serviceResponse.Message = ex.Message;
+      }
       return serviceResponse;
     }
 
@@ -41,16 +76,28 @@ namespace inventory_system.Services
     {
       var serviceResponse = new ServiceResponse<List<Order>>();
 
-      var order = orders.FirstOrDefault(o => o.Id == updatedOrder.Id);
+      try
+      {
+        var order = orders.FirstOrDefault(o => o.Id == updatedOrder.Id);
 
-      order.EntryDate = DateTime.Now;
-      order.Name = updatedOrder.Name;
-      order.Category = updatedOrder.Category;
-      order.Supplier = updatedOrder.Supplier;
-      order.Weight = updatedOrder.Weight;
-      order.Quantity = updatedOrder.Quantity;
+        if (order == null)
+          throw new Exception($"Order with Id '{updatedOrder.Id}' was not found.");
 
-      serviceResponse.Data = orders;
+        order.EntryDate = DateTime.Now;
+        order.Name = updatedOrder.Name;
+        order.Category = updatedOrder.Category;
+        order.Supplier = updatedOrder.Supplier;
+        order.Weight = updatedOrder.Weight;
+        order.Quantity = updatedOrder.Quantity;
+
+        serviceResponse.Data = orders;
+        serviceResponse.Message = "OK";
+      }
+      catch (Exception ex)
+      {
+        serviceResponse.Success = false;
+        serviceResponse.Message = ex.Message;
+      }
       return serviceResponse;
     }
   }
