@@ -40,9 +40,15 @@ namespace inventory_system.Controllers
     [HttpPost]
     public async Task<ActionResult<ServiceResponse<List<Order>>>> CreateNewOrder(Order newOrder)
     {
-      await _orderService.CreateNewOrder(newOrder);
+      var orders = await _orderService.CreateNewOrder(newOrder);
 
-      var orders = await _orderService.GetAllOrders();
+      return Created("order", orders);
+    }
+    
+    [HttpPut]
+    public async Task<ActionResult<ServiceResponse<List<Order>>>> UpdateOrder(Order updatedOrder)
+    {
+      var orders = await _orderService.UpdateOrder(updatedOrder);
 
       return Created("order", orders);
     }

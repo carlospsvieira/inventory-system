@@ -12,7 +12,7 @@ namespace inventory_system.Models
     public string? Name { get; set; }
     public Categories Category { get; set; }
     public string Supplier { get; set; } = string.Empty;
-    public double Weight { get; set; } = 0;
+    public double Weight { get; set; }
     public int Quantity { get; set; }
 
     [JsonIgnore]
