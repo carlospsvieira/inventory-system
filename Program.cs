@@ -1,5 +1,6 @@
 global using inventory_system.Models;
 global using inventory_system.Services;
+global using AutoMapper;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -8,6 +9,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddScoped<IOrderService, OrderService>();
 
 var app = builder.Build();

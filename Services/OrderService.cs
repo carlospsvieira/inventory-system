@@ -11,6 +11,12 @@ namespace inventory_system.Services
       new Order {Id = 1, Name = "Cookie", Category = Categories.PantryStaples, Supplier = "Nestle", Quantity = 10000},
       new Order {Id = 2, Name = "Ham", Category = Categories.DairyAndEgg, Supplier = "Dairy Deals", Weight = 0.5, Quantity = 100}
     };
+    private readonly IMapper _mapper;
+
+    public OrderService(IMapper mapper)
+    {
+      _mapper = mapper;
+    }
 
     public async Task<ServiceResponse<List<Order>>> CreateNewOrder(Order newOrder)
     {
@@ -83,12 +89,9 @@ namespace inventory_system.Services
         if (order == null)
           throw new Exception($"Order with Id '{updatedOrder.Id}' was not found.");
 
+        _mapper.Map(updatedOrder, order);
+
         order.EntryDate = DateTime.Now;
-        order.Name = updatedOrder.Name;
-        order.Category = updatedOrder.Category;
-        order.Supplier = updatedOrder.Supplier;
-        order.Weight = updatedOrder.Weight;
-        order.Quantity = updatedOrder.Quantity;
 
         serviceResponse.Data = orders;
         serviceResponse.Message = "OK";
