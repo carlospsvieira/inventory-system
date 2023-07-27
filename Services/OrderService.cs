@@ -28,7 +28,31 @@ namespace inventory_system.Services
         newOrder.Id = orders.Max(o => o.Id) + 1;
         orders.Add(newOrder);
         serviceResponse.Data = orders;
-        serviceResponse.Message = "OK";
+        serviceResponse.Message = "Created";
+      }
+      catch (Exception ex)
+      {
+        serviceResponse.Success = false;
+        serviceResponse.Message = ex.Message;
+      }
+      return serviceResponse;
+    }
+
+    public async Task<ServiceResponse<List<Order>>> DeleteOrder(int id)
+    {
+      var serviceResponse = new ServiceResponse<List<Order>>();
+
+      try
+      {
+        var order = orders.FirstOrDefault(o => o.Id == id);
+
+        if (order == null)
+          throw new Exception($"Order with Id '{id}' was not found.");
+
+        orders.Remove(order);
+
+        serviceResponse.Data = orders;
+        serviceResponse.Message = $"Order with Id '{id}' was deleted";
       }
       catch (Exception ex)
       {
@@ -94,7 +118,7 @@ namespace inventory_system.Services
         order.EntryDate = DateTime.Now;
 
         serviceResponse.Data = orders;
-        serviceResponse.Message = "OK";
+        serviceResponse.Message = $"Order with Id '{updatedOrder.Id}' was updated";
       }
       catch (Exception ex)
       {
