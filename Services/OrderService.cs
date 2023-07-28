@@ -7,15 +7,13 @@ namespace inventory_system.Services
 {
   public class OrderService : IOrderService
   {
-    private static List<Order> orders = new List<Order> {
-      new Order {Id = 1, Name = "Cookie", Category = Categories.PantryStaples, Supplier = "Nestle", Quantity = 10000},
-      new Order {Id = 2, Name = "Ham", Category = Categories.DairyAndEgg, Supplier = "Dairy Deals", Weight = 0.5, Quantity = 100}
-    };
     private readonly IMapper _mapper;
+    private readonly DataContext _context;
 
-    public OrderService(IMapper mapper)
+    public OrderService(IMapper mapper, DataContext context)
     {
       _mapper = mapper;
+      _context = context;
     }
 
     public async Task<ServiceResponse<List<Order>>> CreateNewOrder(Order newOrder)
@@ -25,8 +23,13 @@ namespace inventory_system.Services
       try
       {
         newOrder.EntryDate = DateTime.Now;
-        newOrder.Id = orders.Max(o => o.Id) + 1;
-        orders.Add(newOrder);
+
+        await _context.Orders.AddAsync(newOrder);
+
+        await _context.SaveChangesAsync();
+
+        var orders = await _context.Orders.ToListAsync();
+
         serviceResponse.Data = orders;
         serviceResponse.Message = "Created";
       }
@@ -44,12 +47,16 @@ namespace inventory_system.Services
 
       try
       {
-        var order = orders.FirstOrDefault(o => o.Id == id);
+        var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
 
         if (order == null)
           throw new Exception($"Order with Id '{id}' was not found.");
 
-        orders.Remove(order);
+        _context.Orders.Remove(order);
+
+        await _context.SaveChangesAsync();
+
+        var orders = await _context.Orders.ToListAsync();
 
         serviceResponse.Data = orders;
         serviceResponse.Message = $"Order with Id '{id}' was deleted";
@@ -68,6 +75,7 @@ namespace inventory_system.Services
 
       try
       {
+        var orders = await _context.Orders.ToListAsync();
         serviceResponse.Data = orders;
         serviceResponse.Message = "OK";
 
@@ -86,7 +94,7 @@ namespace inventory_system.Services
 
       try
       {
-        var order = orders.FirstOrDefault(o => o.Id == id);
+        var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
 
         if (order == null)
           throw new Exception($"Order with Id '{id}' was not found.");
@@ -102,13 +110,13 @@ namespace inventory_system.Services
       return serviceResponse;
     }
 
-    public async Task<ServiceResponse<List<Order>>> UpdateOrder(Order updatedOrder)
+    public async Task<ServiceResponse<Order>> UpdateOrder(Order updatedOrder)
     {
-      var serviceResponse = new ServiceResponse<List<Order>>();
+      var serviceResponse = new ServiceResponse<Order>();
 
       try
       {
-        var order = orders.FirstOrDefault(o => o.Id == updatedOrder.Id);
+        var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == updatedOrder.Id);
 
         if (order == null)
           throw new Exception($"Order with Id '{updatedOrder.Id}' was not found.");
@@ -117,7 +125,9 @@ namespace inventory_system.Services
 
         order.EntryDate = DateTime.Now;
 
-        serviceResponse.Data = orders;
+        await _context.SaveChangesAsync();
+
+        serviceResponse.Data = order;
         serviceResponse.Message = $"Order with Id '{updatedOrder.Id}' was updated";
       }
       catch (Exception ex)

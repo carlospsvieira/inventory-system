@@ -56,7 +56,7 @@ namespace inventory_system.Controllers
     }
 
     [HttpPut("{id}/edit")]
-    public async Task<ActionResult<ServiceResponse<List<Order>>>> UpdateOrder(Order updatedOrder)
+    public async Task<ActionResult<ServiceResponse<Order>>> UpdateOrder(Order updatedOrder)
     {
       var orders = await _orderService.UpdateOrder(updatedOrder);
 
@@ -69,7 +69,7 @@ namespace inventory_system.Controllers
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<ServiceResponse<Order>>> DeleteOrder(int id)
+    public async Task<ActionResult<ServiceResponse<List<Order>>>> DeleteOrder(int id)
     {
       var orders = await _orderService.DeleteOrder(id);
 
