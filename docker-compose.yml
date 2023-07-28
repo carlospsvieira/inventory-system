@@ -1,0 +1,15 @@
+version: '3.9'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: inventory_system_db
+    ports:
+      - "1433:1433"
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: Arigatou123!
+      MSSQL_PID: Express
+
+volumes:
+  sqlserver_data:
