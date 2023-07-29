@@ -59,7 +59,7 @@ namespace inventory_system.Services
         var orders = await _context.Orders.ToListAsync();
 
         serviceResponse.Data = orders;
-        serviceResponse.Message = $"Order with Id '{id}' was deleted";
+        serviceResponse.Message = $"Order with Id '{id}' was deleted.";
       }
       catch (Exception ex)
       {
@@ -128,7 +128,7 @@ namespace inventory_system.Services
         await _context.SaveChangesAsync();
 
         serviceResponse.Data = order;
-        serviceResponse.Message = $"Order with Id '{updatedOrder.Id}' was updated";
+        serviceResponse.Message = $"Order with Id '{updatedOrder.Id}' was updated.";
       }
       catch (Exception ex)
       {
