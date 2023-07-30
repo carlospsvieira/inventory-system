@@ -67,12 +67,50 @@ namespace inventory_system.Services
 
     public async Task<ServiceResponse<Product>> GetProductById(int id)
     {
-      throw new NotImplementedException();
+      var serviceResponse = new ServiceResponse<Product>();
+
+      try
+      {
+        var product = products.FirstOrDefault(p => p.Id == id);
+
+        if (product == null)
+          throw new Exception($"Product with Id '{id}' was not found.");
+
+        serviceResponse.Data = product;
+        serviceResponse.Message = "OK";
+      }
+      catch (Exception ex)
+      {
+        serviceResponse.Success = false;
+        serviceResponse.Message = ex.Message;
+      }
+
+      return serviceResponse;
     }
 
     public async Task<ServiceResponse<Product>> UpdateProduct(Product updatedProduct)
     {
-      throw new NotImplementedException();
+      var serviceResponse = new ServiceResponse<Product>();
+
+      try
+      {
+        var product = products.FirstOrDefault(p => p.Id == updatedProduct.Id);
+
+        if (product == null)
+          throw new Exception($"Product with id '{updatedProduct.Id}' was not found.");
+
+        _mapper.Map(updatedProduct, product);
+
+        serviceResponse.Data = product;
+        serviceResponse.Message = $"Product with Id '{updatedProduct.Id}' was updated.";
+      }
+      catch (Exception ex)
+      {
+        serviceResponse.Success = false;
+        serviceResponse.Message = ex.Message;
+      }
+
+      return serviceResponse;
     }
   }
 }

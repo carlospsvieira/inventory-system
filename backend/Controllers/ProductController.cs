@@ -18,7 +18,6 @@ namespace inventory_system.Controllers
     }
 
     [HttpGet]
-
     public async Task<ActionResult<ServiceResponse<List<Product>>>> Get()
     {
       var products = await _productService.GetAllProducts();
@@ -30,5 +29,45 @@ namespace inventory_system.Controllers
 
       return Ok(products);
     }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<ServiceResponse<Product>>> GetById(int id)
+    {
+      var product = await _productService.GetProductById(id);
+
+      if (product.Success == false)
+      {
+        return NotFound(product);
+      }
+
+      return Ok(product);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<ServiceResponse<List<Product>>>> DeleteProduct(int id)
+    {
+      var products = await _productService.DeleteProduct(id);
+
+      if (products.Success == false)
+      {
+        return NotFound(products);
+      }
+
+      return Ok(products);
+    }
+
+    [HttpPut("{id}/edit")]
+    public async Task<ActionResult<ServiceResponse<Product>>> UpdateProduct(Order updatedProduct)
+    {
+      var products = await _productService.UpdateProduct(updatedProduct);
+
+      if (products.Success == false)
+      {
+        return NotFound(products);
+      }
+
+      return Ok(products);
+    }
+
   }
 }
