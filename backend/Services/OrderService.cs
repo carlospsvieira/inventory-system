@@ -80,8 +80,7 @@ namespace inventory_system.Services
       {
         var orders = await _context.Orders.ToListAsync();
         serviceResponse.Data = orders;
-        serviceResponse.Message = "OK";
-
+        serviceResponse.Message = "OK. Reminder: Order Items will always be null at this endpoint for better performance reasons";
       }
       catch (Exception ex)
       {
@@ -101,6 +100,9 @@ namespace inventory_system.Services
 
         if (order == null)
           throw new Exception($"Order with Id '{id}' was not found.");
+
+        var items = await _context.OrderItems.Where(item => item.OrderId == id).ToListAsync();
+        order.Items = items;
 
         serviceResponse.Data = order;
         serviceResponse.Message = "OK";
@@ -125,9 +127,6 @@ namespace inventory_system.Services
           throw new Exception($"Order with Id '{updatedOrder.Id}' was not found.");
 
         _mapper.Map(updatedOrder, order);
-
-        if (order.Items == null)
-          throw new Exception("Updated Items was not found");
 
         order.EntryDate = DateTime.Now;
 
