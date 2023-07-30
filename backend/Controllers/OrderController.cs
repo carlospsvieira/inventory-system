@@ -55,17 +55,17 @@ namespace inventory_system.Controllers
       return Created("order", orders);
     }
 
-    [HttpPut("{id}")]
-    public async Task<ActionResult<ServiceResponse<Order>>> UpdateOrder(Order updatedOrder)
+    [HttpPost("{id}")]
+    public async Task<ActionResult<ServiceResponse<OrderItem>>> AddOrderItem(int id, OrderItem newOrderItem)
     {
-      var orders = await _orderService.UpdateOrder(updatedOrder);
+      var item = await _orderService.AddOrderItem(id, newOrderItem);
 
-      if (orders.Success == false)
+      if (item.Success == false)
       {
-        return NotFound(orders);
+        return NotFound(item);
       }
 
-      return Ok(orders);
+      return Ok(item);
     }
 
     [HttpDelete("{id}")]

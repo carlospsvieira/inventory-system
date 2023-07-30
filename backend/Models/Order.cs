@@ -18,7 +18,6 @@ namespace inventory_system.Models
     public List<OrderItem>? Items { get; set; }
     public bool Completed { get; set; } = false;
 
-
     [JsonIgnore]
     public DateTime EntryDate { get; set; }
     public string FormattedEntryDate => EntryDate.ToString("dd MMM yyyy HH:mm:ss");

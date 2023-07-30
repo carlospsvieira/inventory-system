@@ -115,25 +115,19 @@ namespace inventory_system.Services
       return serviceResponse;
     }
 
-    public async Task<ServiceResponse<Order>> UpdateOrder(Order updatedOrder)
+    public async Task<ServiceResponse<OrderItem>> AddOrderItem(int id, OrderItem newOrderItem)
     {
-      var serviceResponse = new ServiceResponse<Order>();
+      var serviceResponse = new ServiceResponse<OrderItem>();
 
       try
       {
-        var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == updatedOrder.Id);
-
-        if (order == null)
-          throw new Exception($"Order with Id '{updatedOrder.Id}' was not found.");
-
-        _mapper.Map(updatedOrder, order);
-
-        order.EntryDate = DateTime.Now;
+        newOrderItem.OrderId = id;
+        _context.OrderItems.Add(newOrderItem);
 
         await _context.SaveChangesAsync();
 
-        serviceResponse.Data = order;
-        serviceResponse.Message = $"Order with Id '{updatedOrder.Id}' was updated.";
+        serviceResponse.Data = newOrderItem;
+        serviceResponse.Message = $"Item added to Order with Id '{id}'";
       }
       catch (Exception ex)
       {
