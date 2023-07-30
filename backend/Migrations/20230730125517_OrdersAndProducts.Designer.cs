@@ -12,8 +12,8 @@ using inventory_system.Data;
 namespace inventory_system.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230728142940_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230730125517_OrdersAndProducts")]
+    partial class OrdersAndProducts
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,11 +33,29 @@ namespace inventory_system.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Category")
-                        .HasColumnType("int");
-
                     b.Property<bool>("Completed")
                         .HasColumnType("bit");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("inventory_system.Models.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("EntryDate")
                         .HasColumnType("datetime2");
@@ -57,7 +75,16 @@ namespace inventory_system.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("inventory_system.Models.Order", b =>
+                {
+                    b.HasOne("inventory_system.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
+
+                    b.Navigation("Product");
                 });
 #pragma warning restore 612, 618
         }

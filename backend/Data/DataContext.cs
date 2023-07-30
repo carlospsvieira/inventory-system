@@ -13,5 +13,6 @@ namespace inventory_system.Data
         }
 
         public DbSet<Order> Orders => Set<Order>();
+        public DbSet<Product> Products => Set<Product>();
     }
 }
