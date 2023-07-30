@@ -101,6 +101,8 @@ namespace inventory_system.Services
 
         _mapper.Map(updatedProduct, product);
 
+        product.EntryDate = DateTime.Now;
+
         serviceResponse.Data = product;
         serviceResponse.Message = $"Product with Id '{updatedProduct.Id}' was updated.";
       }

@@ -5,11 +5,12 @@ using System.Threading.Tasks;
 
 namespace inventory_system
 {
-    public class AutoMapperProfile : Profile
+  public class AutoMapperProfile : Profile
+  {
+    public AutoMapperProfile()
     {
-        public AutoMapperProfile()
-        {
-            CreateMap<Order, Order>();
-        }
+      CreateMap<Order, Order>();
+      CreateMap<Product, Product>();
     }
+  }
 }
