@@ -14,6 +14,7 @@ namespace inventory_system.Models
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
+    public string Title { get; set; } = string.Empty;
     public List<OrderItem>? Items { get; set; }
     public bool Completed { get; set; } = false;
 
