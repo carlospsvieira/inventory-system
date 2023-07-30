@@ -134,5 +134,31 @@ namespace inventory_system.Services
       }
       return serviceResponse;
     }
+
+    public async Task<ServiceResponse<OrderItem>> RemoveItemFromOrder(int itemId)
+    {
+      var serviceResponse = new ServiceResponse<OrderItem>();
+
+      try
+      {
+        var item = await _context.OrderItems.FirstOrDefaultAsync(item => item.Id == itemId);
+        
+        if (item == null)
+          throw new Exception($"Item with Id '{itemId}' was not found in Order.");
+
+        _context.OrderItems.Remove(item);
+
+        await _context.SaveChangesAsync();
+
+        serviceResponse.Data = item;
+        serviceResponse.Message = $"Item with Id '{itemId}' was deleted from Order.";
+      }
+      catch (Exception ex)
+      {
+        serviceResponse.Success = false;
+        serviceResponse.Message = ex.Message;
+      }
+      return serviceResponse;
+    }
   }
 }

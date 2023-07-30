@@ -80,5 +80,18 @@ namespace inventory_system.Controllers
 
       return Ok(orders);
     }
+
+    [HttpDelete("{id}/{itemId}")]
+    public async Task<ActionResult<ServiceResponse<OrderItem>>> DeleteOrderItem(int itemId)
+    {
+      var item = await _orderService.RemoveItemFromOrder(itemId);
+
+      if (item.Success == false)
+      {
+        return NotFound(item);
+      }
+
+      return Ok(item);
+    }
   }
 }
