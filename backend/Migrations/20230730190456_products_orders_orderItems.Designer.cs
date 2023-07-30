@@ -12,8 +12,8 @@ using inventory_system.Data;
 namespace inventory_system.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230730125517_OrdersAndProducts")]
-    partial class OrdersAndProducts
+    [Migration("20230730190456_products_orders_orderItems")]
+    partial class products_orders_orderItems
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,14 +36,46 @@ namespace inventory_system.Migrations
                     b.Property<bool>("Completed")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("ProductId")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("EntryDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
-
                     b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("inventory_system.Models.OrderItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Supplier")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Weight")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderItem");
                 });
 
             modelBuilder.Entity("inventory_system.Models.Product", b =>
@@ -78,13 +110,16 @@ namespace inventory_system.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("inventory_system.Models.OrderItem", b =>
+                {
+                    b.HasOne("inventory_system.Models.Order", null)
+                        .WithMany("Items")
+                        .HasForeignKey("OrderId");
+                });
+
             modelBuilder.Entity("inventory_system.Models.Order", b =>
                 {
-                    b.HasOne("inventory_system.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId");
-
-                    b.Navigation("Product");
+                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,21 +1,16 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Text.Json.Serialization;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace inventory_system.Models
 {
-  public class Product : Item
+  public class OrderItem : Item
   {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
-
-    [JsonIgnore]
-    public DateTime EntryDate { get; set; }
-    public string FormattedEntryDate => EntryDate.ToString("dd MMM yyyy HH:mm:ss");
   }
 }
