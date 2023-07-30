@@ -7,12 +7,6 @@ namespace inventory_system.Services
 {
   public class ProductService : IProductService
   {
-
-    private static List<Product> products = new List<Product> {
-      new Product {Id = 1, Name = "Cookie", Category = Categories.PantryStaples, Supplier = "Nestle", Quantity = 10000},
-      new Product {Id = 2, Name = "Ham", Category = Categories.DairyAndEgg, Supplier = "Dairy Deals", Weight = 0.5, Quantity = 100}
-    };
-
     private readonly IMapper _mapper;
     private readonly DataContext _context;
 
@@ -28,12 +22,16 @@ namespace inventory_system.Services
 
       try
       {
-        var product = products.FirstOrDefault(p => p.Id == id);
+        var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
 
         if (product == null)
           throw new Exception($"Product with Id '{id}' was not found.");
 
-        products.Remove(product);
+        _context.Products.Remove(product);
+
+        await _context.SaveChangesAsync();
+
+        var products = await _context.Products.ToListAsync();
 
         serviceResponse.Data = products;
         serviceResponse.Message = $"Product with Id '{id}' was deleted.";
@@ -53,6 +51,7 @@ namespace inventory_system.Services
 
       try
       {
+        var products = await _context.Products.ToListAsync();
         serviceResponse.Data = products;
         serviceResponse.Message = "OK";
       }
@@ -71,7 +70,7 @@ namespace inventory_system.Services
 
       try
       {
-        var product = products.FirstOrDefault(p => p.Id == id);
+        var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
 
         if (product == null)
           throw new Exception($"Product with Id '{id}' was not found.");
@@ -94,7 +93,7 @@ namespace inventory_system.Services
 
       try
       {
-        var product = products.FirstOrDefault(p => p.Id == updatedProduct.Id);
+        var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == updatedProduct.Id);
 
         if (product == null)
           throw new Exception($"Product with id '{updatedProduct.Id}' was not found.");
@@ -102,6 +101,8 @@ namespace inventory_system.Services
         _mapper.Map(updatedProduct, product);
 
         product.EntryDate = DateTime.Now;
+
+        await _context.SaveChangesAsync();
 
         serviceResponse.Data = product;
         serviceResponse.Message = $"Product with Id '{updatedProduct.Id}' was updated.";

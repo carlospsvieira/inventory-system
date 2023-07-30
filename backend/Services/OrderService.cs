@@ -22,7 +22,10 @@ namespace inventory_system.Services
 
       try
       {
-        newOrder.EntryDate = DateTime.Now;
+        if (newOrder.Product == null)
+          throw new Exception("New Product was not found");
+
+        newOrder.Product.EntryDate = DateTime.Now;
 
         await _context.Orders.AddAsync(newOrder);
 
@@ -123,7 +126,10 @@ namespace inventory_system.Services
 
         _mapper.Map(updatedOrder, order);
 
-        order.EntryDate = DateTime.Now;
+        if (order.Product == null)
+          throw new Exception("Updated Product was not found");
+
+        order.Product.EntryDate = DateTime.Now;
 
         await _context.SaveChangesAsync();
 
