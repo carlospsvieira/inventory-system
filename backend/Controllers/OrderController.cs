@@ -43,16 +43,16 @@ namespace inventory_system.Controllers
     }
 
     [HttpPost("new")]
-    public async Task<ActionResult<ServiceResponse<List<Order>>>> CreateNewOrder(Order newOrder)
+    public async Task<ActionResult<ServiceResponse<Order>>> CreateNewOrder(Order newOrder)
     {
-      var orders = await _orderService.CreateNewOrder(newOrder);
+      var order = await _orderService.CreateNewOrder(newOrder);
 
-      if (orders.Success == false)
+      if (order.Success == false)
       {
-        return BadRequest(orders);
+        return BadRequest(order);
       }
 
-      return Created("order", orders);
+      return Created("order", order);
     }
 
     [HttpPost("{id}")]

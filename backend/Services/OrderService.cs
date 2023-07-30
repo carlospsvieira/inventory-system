@@ -16,9 +16,9 @@ namespace inventory_system.Services
       _context = context;
     }
 
-    public async Task<ServiceResponse<List<Order>>> CreateNewOrder(Order newOrder)
+    public async Task<ServiceResponse<Order>> CreateNewOrder(Order newOrder)
     {
-      var serviceResponse = new ServiceResponse<List<Order>>();
+      var serviceResponse = new ServiceResponse<Order>();
 
       try
       {
@@ -27,13 +27,11 @@ namespace inventory_system.Services
 
         newOrder.EntryDate = DateTime.Now;
 
-        await _context.Orders.AddAsync(newOrder);
+        _context.Orders.Add(newOrder);
 
         await _context.SaveChangesAsync();
 
-        var orders = await _context.Orders.ToListAsync();
-
-        serviceResponse.Data = orders;
+        serviceResponse.Data = newOrder;
         serviceResponse.Message = "Created";
       }
       catch (Exception ex)

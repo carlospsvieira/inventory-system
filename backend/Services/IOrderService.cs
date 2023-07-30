@@ -9,7 +9,7 @@ namespace inventory_system.Services
   {
     Task<ServiceResponse<List<Order>>> GetAllOrders();
     Task<ServiceResponse<Order>> GetOrderById(int id);
-    Task<ServiceResponse<List<Order>>> CreateNewOrder(Order newOrder);
+    Task<ServiceResponse<Order>> CreateNewOrder(Order newOrder);
     Task<ServiceResponse<OrderItem>> AddOrderItem(int id, OrderItem newOrderItem);
     Task<ServiceResponse<List<Order>>> DeleteOrder(int id);
   }
