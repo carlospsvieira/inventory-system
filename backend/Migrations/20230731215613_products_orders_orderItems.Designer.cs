@@ -12,7 +12,7 @@ using inventory_system.Data;
 namespace inventory_system.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230730211141_products_orders_orderItems")]
+    [Migration("20230731215613_products_orders_orderItems")]
     partial class products_orders_orderItems
     {
         /// <inheritdoc />
@@ -58,6 +58,9 @@ namespace inventory_system.Migrations
 
                     b.Property<int>("Category")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("EntryDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
