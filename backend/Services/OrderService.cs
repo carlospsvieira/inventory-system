@@ -48,7 +48,7 @@ namespace inventory_system.Services
         var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
 
         if (order == null)
-          throw new Exception($"Order with Id '{id}' was not found.");
+          throw new Exception("Not found.");
 
         _context.Orders.Remove(order);
 
@@ -57,7 +57,7 @@ namespace inventory_system.Services
         var orders = await _context.Orders.ToListAsync();
 
         serviceResponse.Data = orders;
-        serviceResponse.Message = $"Order with Id '{id}' was deleted.";
+        serviceResponse.Message = $"Order '{id}' has been deleted.";
       }
       catch (Exception ex)
       {
@@ -94,7 +94,7 @@ namespace inventory_system.Services
         var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
 
         if (order == null)
-          throw new Exception($"Order with Id '{id}' was not found.");
+          throw new Exception("Not found.");
 
         var items = await _context.OrderItems.Where(item => item.OrderId == id).ToListAsync();
         order.Items = items;
@@ -123,7 +123,7 @@ namespace inventory_system.Services
         await _context.SaveChangesAsync();
 
         serviceResponse.Data = newOrderItem;
-        serviceResponse.Message = $"Item added to Order with Id '{id}'";
+        serviceResponse.Message = $"Item has been added to Order '{id}'";
       }
       catch (Exception ex)
       {
@@ -140,13 +140,13 @@ namespace inventory_system.Services
       try
       {
         if (completeOrder.Completed == false)
-          throw new Exception("Request to complete order is incorrect. 'Completed' key is false.");
+          throw new Exception("Request has failed. 'Completed' property is set as false.");
 
         var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == completeOrder.Id);
         var items = await _context.OrderItems.Where(item => item.OrderId == completeOrder.Id).ToListAsync();
 
         if (order == null)
-          throw new Exception($"Order with Id '{completeOrder.Id}' was not found.");
+          throw new Exception($"Not found.");
 
         if (items != null)
         {
@@ -160,7 +160,7 @@ namespace inventory_system.Services
         }
         else
         {
-          serviceResponse.Message = $"Order with Id '{completeOrder.Id}' was completed. No items added to inventory.";
+          serviceResponse.Message = "Completed. No items have been added to inventory.";
           _context.Orders.Remove(order);
           await _context.SaveChangesAsync();
           return serviceResponse;
@@ -168,13 +168,40 @@ namespace inventory_system.Services
 
         _context.Orders.Remove(order);
         await _context.SaveChangesAsync();
-        serviceResponse.Message = $"Order with Id '{completeOrder.Id}' was completed. All items sent to inventory.";
+        serviceResponse.Message = "Completed. Items have been added to inventory.";
       }
       catch (Exception ex)
       {
         serviceResponse.Success = false;
         serviceResponse.Message = ex.Message;
       }
+      return serviceResponse;
+    }
+
+    public async Task<ServiceResponse<Order>> ChangeOrderTitle(int id, string newTitle)
+    {
+      var serviceResponse = new ServiceResponse<Order>();
+
+      try
+      {
+        var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
+
+        if (order == null)
+          throw new Exception("Not found.");
+
+        order.Title = newTitle;
+
+        await _context.SaveChangesAsync();
+
+        serviceResponse.Data = order;
+        serviceResponse.Message = $"Order '{id}' title has changed.";
+      }
+      catch (Exception ex)
+      {
+        serviceResponse.Success = false;
+        serviceResponse.Message = ex.Message;
+      }
+
       return serviceResponse;
     }
   }

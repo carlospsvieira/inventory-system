@@ -13,5 +13,6 @@ namespace inventory_system.Services
     Task<ServiceResponse<OrderItem>> AddOrderItem(int id, OrderItem newOrderItem);
     Task<ServiceResponse<List<Order>>> DeleteOrder(int id);
     Task<ServiceResponse<Order>> CompleteOrder(Order completeOrder);
+    Task<ServiceResponse<Order>> ChangeOrderTitle(int id, string newTitle);
   }
 }

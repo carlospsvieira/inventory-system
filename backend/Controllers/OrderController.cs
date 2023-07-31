@@ -93,5 +93,18 @@ namespace inventory_system.Controllers
 
       return Ok(order);
     }
+
+    [HttpPatch("{id}")]
+    public async Task<ActionResult<ServiceResponse<Order>>> ChangeOrderTitle(int id, string newTitle)
+    {
+      var order = await _orderService.ChangeOrderTitle(id, newTitle);
+
+      if (order.Success == false)
+      {
+        return BadRequest(order);
+      }
+
+      return Ok(order);
+    }
   }
 }
