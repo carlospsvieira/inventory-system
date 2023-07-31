@@ -13,9 +13,5 @@ namespace inventory_system.Models
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
-
-    [JsonIgnore]
-    public DateTime EntryDate { get; set; }
-    public string FormattedEntryDate => EntryDate.ToString("dd MMM yyyy HH:mm:ss");
   }
 }
