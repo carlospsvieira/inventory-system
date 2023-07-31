@@ -22,9 +22,6 @@ namespace inventory_system.Services
 
       try
       {
-        if (newOrder.Items == null)
-          throw new Exception("New Items was not found");
-
         newOrder.EntryDate = DateTime.Now;
 
         _context.Orders.Add(newOrder);
@@ -78,7 +75,7 @@ namespace inventory_system.Services
       {
         var orders = await _context.Orders.ToListAsync();
         serviceResponse.Data = orders;
-        serviceResponse.Message = "OK. Reminder: Order Items will always be null at this endpoint for better performance reasons";
+        serviceResponse.Message = "OK. Reminder: Order Items will always be null at this endpoint for better performance.";
       }
       catch (Exception ex)
       {
@@ -120,6 +117,7 @@ namespace inventory_system.Services
       try
       {
         newOrderItem.OrderId = id;
+        newOrderItem.EntryDate = DateTime.Now;
         _context.OrderItems.Add(newOrderItem);
 
         await _context.SaveChangesAsync();
@@ -135,23 +133,42 @@ namespace inventory_system.Services
       return serviceResponse;
     }
 
-    public async Task<ServiceResponse<OrderItem>> RemoveItemFromOrder(int itemId)
+    public async Task<ServiceResponse<Order>> CompleteOrder(Order completeOrder)
     {
-      var serviceResponse = new ServiceResponse<OrderItem>();
+      var serviceResponse = new ServiceResponse<Order>();
 
       try
       {
-        var item = await _context.OrderItems.FirstOrDefaultAsync(item => item.Id == itemId);
-        
-        if (item == null)
-          throw new Exception($"Item with Id '{itemId}' was not found in Order.");
+        if (completeOrder.Completed == false)
+          throw new Exception("Request to complete order is incorrect. 'Completed' key is false.");
 
-        _context.OrderItems.Remove(item);
+        var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == completeOrder.Id);
+        var items = await _context.OrderItems.Where(item => item.OrderId == completeOrder.Id).ToListAsync();
 
+        if (order == null)
+          throw new Exception($"Order with Id '{completeOrder.Id}' was not found.");
+
+        if (items != null)
+        {
+          foreach (OrderItem item in items)
+          {
+            item.EntryDate = DateTime.Now;
+
+            var product = _mapper.Map<Product>(item);
+            _context.Products.Add(product);
+          }
+        }
+        else
+        {
+          serviceResponse.Message = $"Order with Id '{completeOrder.Id}' was completed. No items added to inventory.";
+          _context.Orders.Remove(order);
+          await _context.SaveChangesAsync();
+          return serviceResponse;
+        }
+
+        _context.Orders.Remove(order);
         await _context.SaveChangesAsync();
-
-        serviceResponse.Data = item;
-        serviceResponse.Message = $"Item with Id '{itemId}' was deleted from Order.";
+        serviceResponse.Message = $"Order with Id '{completeOrder.Id}' was completed. All items sent to inventory.";
       }
       catch (Exception ex)
       {

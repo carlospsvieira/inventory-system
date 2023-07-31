@@ -55,7 +55,7 @@ namespace inventory_system.Controllers
       return Created("order", order);
     }
 
-    [HttpPost("{id}")]
+    [HttpPost("{id}/item")]
     public async Task<ActionResult<ServiceResponse<OrderItem>>> AddOrderItem(int id, OrderItem newOrderItem)
     {
       var item = await _orderService.AddOrderItem(id, newOrderItem);
@@ -81,17 +81,17 @@ namespace inventory_system.Controllers
       return Ok(orders);
     }
 
-    [HttpDelete("{id}/{itemId}")]
-    public async Task<ActionResult<ServiceResponse<OrderItem>>> DeleteOrderItem(int itemId)
+    [HttpPost("complete")]
+    public async Task<ActionResult<ServiceResponse<Order>>> CompleteOrder(Order completeOrder)
     {
-      var item = await _orderService.RemoveItemFromOrder(itemId);
+      var order = await _orderService.CompleteOrder(completeOrder);
 
-      if (item.Success == false)
+      if (order.Success == false)
       {
-        return NotFound(item);
+        return NotFound(order);
       }
 
-      return Ok(item);
+      return Ok(order);
     }
   }
 }
