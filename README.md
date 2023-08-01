@@ -4,7 +4,7 @@
 
 ##### Intro:
 
-This is an inventory system with purchase order functionalities, meaning that products are only added to stock after orders are marked as completed. You may start, edit, delete and complete purchase orders, and manage products in the inventory.
+The objective of this system is total management between purchase orders and products in stock. When the order is marked as complete, it will automatically send all its products to the inventory, where it is also possible to make changes.
 
 ##### Future Goals:
 
