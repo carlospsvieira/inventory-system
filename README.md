@@ -4,7 +4,7 @@
 
 ##### Intro:
 
-The objective of this system is total management between purchase orders and products in stock. When the order is marked as complete, it will automatically send all its products to the inventory, where it is also possible to make changes.
+The objective of this system is a complete management between purchase orders and products in stock. When the order is marked as complete, it will automatically send all its products to the inventory, where it is also possible to make changes.
 
 ##### Future Goals:
 
