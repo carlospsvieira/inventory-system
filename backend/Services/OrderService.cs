@@ -110,29 +110,6 @@ namespace inventory_system.Services
       return serviceResponse;
     }
 
-    public async Task<ServiceResponse<OrderItem>> AddOrderItem(int id, OrderItem newOrderItem)
-    {
-      var serviceResponse = new ServiceResponse<OrderItem>();
-
-      try
-      {
-        newOrderItem.OrderId = id;
-        newOrderItem.EntryDate = DateTime.Now;
-        _context.OrderItems.Add(newOrderItem);
-
-        await _context.SaveChangesAsync();
-
-        serviceResponse.Data = newOrderItem;
-        serviceResponse.Message = $"Item has been added to Order '{id}'";
-      }
-      catch (Exception ex)
-      {
-        serviceResponse.Success = false;
-        serviceResponse.Message = ex.Message;
-      }
-      return serviceResponse;
-    }
-
     public async Task<ServiceResponse<Order>> CompleteOrder(Order completeOrder)
     {
       var serviceResponse = new ServiceResponse<Order>();

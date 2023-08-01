@@ -11,6 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 DotNetEnv.Env.Load();
 
 // Add services to the container.
+
+//Connect database
 string connectionString = Env.GetString("DB_CONNECTION_STRING");
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(connectionString));
@@ -22,6 +24,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IOrderItemService, OrderItemService>();
 
 var app = builder.Build();
 

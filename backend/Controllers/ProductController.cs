@@ -56,7 +56,7 @@ namespace inventory_system.Controllers
       return Ok(products);
     }
 
-    [HttpPut("{id}/edit")]
+    [HttpPut("edit")]
     public async Task<ActionResult<ServiceResponse<Product>>> UpdateProduct(Product updatedProduct)
     {
       var products = await _productService.UpdateProduct(updatedProduct);
