@@ -4,7 +4,7 @@
 
 ##### Intro:
 
-This is an inventory system with purchase order functionalities, meaning that products are only added to stock after orders are marked as completed. You may start, edit, delete and complete new orders. In the inventory you can edit and remove products.
+This is an inventory system with purchase order functionalities, meaning that products are only added to stock after orders are marked as completed. You may start, edit, delete and complete purchase orders, and manage products in the inventory.
 
 ##### Future Goals:
 
@@ -12,7 +12,7 @@ I'm planning on building a dashboard which will display total orders/products, t
 
 ##### Progress:
 
-* Back-end 90%
+* Back-end 100%
 * Front-end 0%
 
 ##### Technologies:
