@@ -39,6 +39,7 @@ namespace inventory_system.Migrations
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Completed = table.Column<bool>(type: "bit", nullable: false),
                     TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TotalQuantity = table.Column<int>(type: "int", nullable: false),
                     EntryDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>

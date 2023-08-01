@@ -12,7 +12,7 @@ using inventory_system.Data;
 namespace inventory_system.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230801144524_inventoryItems_orders_orderItems")]
+    [Migration("20230801154912_inventoryItems_orders_orderItems")]
     partial class inventoryItems_orders_orderItems
     {
         /// <inheritdoc />
@@ -80,6 +80,9 @@ namespace inventory_system.Migrations
 
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("TotalQuantity")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

@@ -23,6 +23,11 @@ namespace inventory_system.Models
       get => Items?.Sum(item => item.Price * item.Quantity) ?? 0M;
       private set { }
     }
+    public int TotalQuantity
+    {
+      get => Items?.Sum(item => item.Quantity) ?? 0;
+      private set { }
+    }
 
     [JsonIgnore]
     public DateTime EntryDate { get; set; }
