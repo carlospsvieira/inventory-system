@@ -29,5 +29,18 @@ namespace inventory_system.Controllers
 
       return Ok(item);
     }
+
+    [HttpPut("edit")]
+    public async Task<ActionResult<ServiceResponse<OrderItem>>> UpdateOrderItem(OrderItem updatedItem)
+    {
+      var item = await _orderItemService.UpdateOrderItem(updatedItem);
+
+      if (item.Success == false)
+      {
+        return NotFound(item);
+      }
+
+      return Ok(item);
+    }
   }
 }

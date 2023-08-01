@@ -11,6 +11,7 @@ namespace inventory_system
     {
       CreateMap<Order, Order>();
       CreateMap<InventoryItem, InventoryItem>();
+      CreateMap<OrderItem, OrderItem>();
       CreateMap<OrderItem, InventoryItem>()
         .ForMember(dest => dest.Id, opt => opt.Ignore());
     }
