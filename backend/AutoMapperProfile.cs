@@ -10,8 +10,8 @@ namespace inventory_system
     public AutoMapperProfile()
     {
       CreateMap<Order, Order>();
-      CreateMap<Product, Product>();
-      CreateMap<OrderItem, Product>()
+      CreateMap<InventoryItem, InventoryItem>();
+      CreateMap<OrderItem, InventoryItem>()
         .ForMember(dest => dest.Id, opt => opt.Ignore());
     }
   }

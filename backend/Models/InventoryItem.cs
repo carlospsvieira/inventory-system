@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace inventory_system.Models
 {
-  public class Product : Item
+  public class InventoryItem : Item
   {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

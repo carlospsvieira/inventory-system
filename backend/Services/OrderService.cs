@@ -131,8 +131,8 @@ namespace inventory_system.Services
           {
             item.EntryDate = DateTime.Now;
 
-            var product = _mapper.Map<Product>(item);
-            _context.Products.Add(product);
+            var inventoryItem = _mapper.Map<InventoryItem>(item);
+            _context.InventoryItems.Add(inventoryItem);
           }
         }
         else

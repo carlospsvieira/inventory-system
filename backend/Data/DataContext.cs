@@ -13,7 +13,7 @@ namespace inventory_system.Data
         }
 
         public DbSet<Order> Orders => Set<Order>();
-        public DbSet<Product> Products => Set<Product>();
+        public DbSet<InventoryItem> InventoryItems => Set<InventoryItem>();
         public DbSet<OrderItem> OrderItems => Set<OrderItem>();
     }
 }
