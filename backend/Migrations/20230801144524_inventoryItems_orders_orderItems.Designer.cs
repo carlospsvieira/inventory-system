@@ -12,7 +12,7 @@ using inventory_system.Data;
 namespace inventory_system.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230801123939_inventoryItems_orders_orderItems")]
+    [Migration("20230801144524_inventoryItems_orders_orderItems")]
     partial class inventoryItems_orders_orderItems
     {
         /// <inheritdoc />
@@ -41,6 +41,9 @@ namespace inventory_system.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -75,6 +78,9 @@ namespace inventory_system.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Orders");
@@ -99,6 +105,9 @@ namespace inventory_system.Migrations
 
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");

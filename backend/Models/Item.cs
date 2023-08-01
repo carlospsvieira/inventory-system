@@ -13,6 +13,7 @@ namespace inventory_system.Models
     public string Supplier { get; set; } = string.Empty;
     public double Weight { get; set; }
     public int Quantity { get; set; }
+    public decimal Price { get; set; }
 
     [JsonIgnore]
     public DateTime EntryDate { get; set; }

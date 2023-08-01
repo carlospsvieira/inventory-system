@@ -18,6 +18,12 @@ namespace inventory_system.Models
     public List<OrderItem>? Items { get; set; }
     public bool Completed { get; set; } = false;
 
+    public decimal TotalPrice
+    {
+      get => Items?.Sum(item => item.Price * item.Quantity) ?? 0M;
+      private set { }
+    }
+
     [JsonIgnore]
     public DateTime EntryDate { get; set; }
     public string FormattedEntryDate => EntryDate.ToString("dd MMM yyyy HH:mm:ss");
