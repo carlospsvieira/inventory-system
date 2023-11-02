@@ -1,6 +1,4 @@
-# 2 in 1 Inventory System with Purchase Orders.
-
-### Under construction.
+# 2 in 1 Inventory with Purchase Order System
 
 ##### Intro:
 
