@@ -2,8 +2,7 @@
 
 ##### Intro:
 
-The purpose of this system is a complete management between purchase orders and products in stock. The order when marked as completed will automatically send all its products to the
-inventory, where you can also make changes.
+This system creates purchase orders connected to the inventory, which allows the company to have control over orders, product counts (in and out), suppliers, prices, and more. It is convenient and avoids stock miscounting while keeping track of all transactions.
 
 ##### Future Goals:
 
@@ -17,3 +16,4 @@ I'm planning on building a dashboard which will display total orders/products, t
 ##### Technologies:
 
 * Asp.Net Core
+* SQL Database
