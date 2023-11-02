@@ -14,9 +14,8 @@ I'm planning on building a dashboard which will display total orders/products, t
 ##### Progress:
 
 * Back-end 100%
-* Front-end 2%
+* Front-end ~
 
 ##### Technologies:
 
 * Asp.Net Core
-* Angular
