@@ -4,16 +4,74 @@
 
 This system creates purchase orders connected to the inventory, which allows the company to have control over orders, product counts (in and out), suppliers, prices, and more. It is convenient and avoids stock miscounting while keeping track of all transactions.
 
-##### Future Goals:
+Prerequisites
+Ensure you have the following installed on your machine:
 
-I'm planning on building a dashboard which will display total orders/products, time in stock and some other relevant information.
+.NET SDK compatible with the project version net6.0.
+Docker and Docker Compose
+Project Structure
+backend/: Contains the .NET backend project files.
+docker-compose.yml: Docker Compose configuration for setting up SQL Server and .NET application.
+Dockerfile: Defines the Docker image configuration for the .NET application.
+Setup Instructions
+Clone this repository to your local machine:
 
-##### Progress:
+Copy code
+git clone git@github.com:carlospsvieira/inventory-system.git
 
-* Back-end 100%
-* Front-end ~
+Navigate to the project directory:
 
-##### Technologies:
+Copy code
+cd inventory-system
+Docker Compose Configuration
+The docker-compose.yml file defines services for both the SQL Server database and the .NET backend application, enabling seamless container orchestration.
 
-* Asp.Net Core
-* SQL Database
+SQL Server Service
+Ports: Exposes port 1433 for SQL Server connections.
+Environment Variables:
+ACCEPT_EULA: Accept the End-User License Agreement.
+SA_PASSWORD: Set the SQL Server sa user password.
+.NET Backend Service
+Image: ASP.NET Core runtime image.
+Ports: Maps port 80 inside the container to port 5000 on the host.
+Environment Variables:
+ConnectionStrings__DefaultConnection: Specifies the connection string for EF Core to connect to the SQL Server container.
+To start the services, run:
+
+
+Copy code
+docker-compose up -d
+Building and Running the Application
+Build the .NET Docker image:
+
+Copy code
+docker build -t inventory-system-image .
+Update the docker-compose.yml to use the built image for the .NET backend service:
+
+yaml
+Copy code
+# .NET Backend Service Configuration
+inventory_system_backend:
+  build:
+    context: .
+    dockerfile: Dockerfile
+  # ... (other configurations)
+Run the Docker Compose command again:
+
+
+Copy code
+docker-compose up -d
+Accessing the Application
+Once the services are up and running, you can access the application through:
+
+Backend API: http://localhost:5000
+SQL Server:
+Server: localhost,1433
+Username: sa
+Password: Specified in the docker-compose.yml (default is set in .env file)
+Troubleshooting
+For any issues or errors during setup or execution, refer to Docker and .NET documentation for troubleshooting steps. Ensure that Docker, Docker Compose, and the required .NET SDK version are correctly installed and configured.
+
+License
+This project is licensed under the MIT License.
+

@@ -1,6 +1,7 @@
 version: '3.9'
 
 services:
+  # SQL Server Database Service
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2019-latest
     container_name: inventory_system_db
@@ -10,7 +11,21 @@ services:
       ACCEPT_EULA: Y
       SA_PASSWORD: ${DB_PASSWORD}
       MSSQL_PID: Express
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+      
+  # .NET Backend Service
+inventory_system_backend:
+  build:
+    context: .
+    dockerfile: Dockerfile
+  container_name: inventory_system_backend
+  ports:
+    - "5000:80"
+  environment:
+    - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=InventoryDb;User Id=sa;Password=${DB_PASSWORD}
+  depends_on:
+    - sqlserver
 
 volumes:
   sqlserver_data:
-#
