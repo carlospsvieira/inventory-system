@@ -8,7 +8,7 @@ This system creates purchase orders connected to the inventory, which allows the
 
 Ensure you have the following installed on your machine:
 
-- [**.NET SDK**](https://dotnet.microsoft.com/download) compatible with the project version `net6.0`.
+- [**.NET SDK**](https://dotnet.microsoft.com/download) compatible with the project version `net6.0` (Only if there is an intent to work directly on the application outside of Docker)
 - [**Docker**](https://www.docker.com/products/docker-desktop) and [**Docker Compose**](https://docs.docker.com/compose/install/)
 
 ## Project Structure
