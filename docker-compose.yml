@@ -13,13 +13,13 @@ services:
       MSSQL_PID: Express
     volumes:
       - sqlserver_data:/var/opt/mssql
-      
-  # .NET Backend Service
-inventory_system_backend:
+
+  # .NET Service
+inventory_system:
   build:
     context: .
     dockerfile: Dockerfile
-  container_name: inventory_system_backend
+  container_name: inventory_system
   ports:
     - "5000:80"
   environment:

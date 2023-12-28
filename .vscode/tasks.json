@@ -7,7 +7,7 @@
       "type": "process",
       "args": [
         "build",
-        "${workspaceFolder}/backend/inventory-system.csproj",
+        "${workspaceFolder}/inventory-system.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
@@ -19,7 +19,7 @@
       "type": "process",
       "args": [
         "publish",
-        "${workspaceFolder}/backend/inventory-system.csproj",
+        "${workspaceFolder}/inventory-system.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
@@ -33,7 +33,7 @@
         "watch",
         "run",
         "--project",
-        "${workspaceFolder}/backend/inventory-system.csproj"
+        "${workspaceFolder}/inventory-system.csproj"
       ],
       "problemMatcher": "$msCompile"
     }

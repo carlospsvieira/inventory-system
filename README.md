@@ -13,7 +13,6 @@ Ensure you have the following installed on your machine:
 
 ## Project Structure
 
-- `backend/`: Contains the .NET backend project files.
 - `docker-compose.yml`: Docker Compose configuration for setting up SQL Server and .NET application.
 - `Dockerfile`: Defines the Docker image configuration for the .NET application.
 
@@ -31,7 +30,7 @@ Ensure you have the following installed on your machine:
 
 ## Docker Compose Configuration
 
-The `docker-compose.yml` file defines services for both the SQL Server database and the .NET backend application, enabling seamless container orchestration.
+The `docker-compose.yml` file defines services for both the SQL Server database and the .NET application, enabling seamless container orchestration.
 
 ### SQL Server Service
 
@@ -41,7 +40,7 @@ The `docker-compose.yml` file defines services for both the SQL Server database 
   - `ACCEPT_EULA`: Accept the End-User License Agreement.
   - `SA_PASSWORD`: Set the SQL Server `sa` user password.
 
-### .NET Backend Service
+### .NET Service
 
 - **Image**: ASP.NET Core runtime image.
 - **Ports**: Maps port 80 inside the container to port 5000 on the host.
@@ -72,7 +71,7 @@ docker-compose up -d
 
 Once the services are up and running, you can access the application through:
 
-- **Backend API**: `http://localhost:5000`
+- **API**: `http://localhost:5000`
 - **SQL Server**: 
   - **Server**: `localhost:1433`
   - **Username**: `sa`
