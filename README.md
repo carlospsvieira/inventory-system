@@ -1,4 +1,4 @@
-# Inventory System
+# 2 in 1 Inventory with Purchase Orders System
 
 ## Intro
 
