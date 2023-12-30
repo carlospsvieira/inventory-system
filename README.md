@@ -11,11 +11,6 @@ Ensure you have the following installed on your machine:
 - [**.NET SDK**](https://dotnet.microsoft.com/download) compatible with the project version `net6.0` (Only if there is an intent to work directly on the application outside of Docker)
 - [**Docker**](https://www.docker.com/products/docker-desktop) and [**Docker Compose**](https://docs.docker.com/compose/install/)
 
-## Project Structure
-
-- `docker-compose.yml`: Docker Compose configuration for setting up SQL Server and .NET application.
-- `Dockerfile`: Defines the Docker image configuration for the .NET application.
-
 ## Setup Instructions
 
 1. **Clone the Repository**:
