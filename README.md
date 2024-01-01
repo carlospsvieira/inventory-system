@@ -25,7 +25,7 @@ Ensure you have the following installed on your machine:
 
 ## Docker Compose Configuration
 
-The `docker-compose.yml` file defines services for both the SQL Server database and the .NET application, enabling seamless container orchestration.
+The `docker-compose.yml` file defines services for both the SQL Server database and the .NET application.
 
 ### SQL Server Service
 
